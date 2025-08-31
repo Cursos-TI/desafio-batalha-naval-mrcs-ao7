@@ -1,56 +1,66 @@
 #include <stdio.h>
 
-int main(){
-    char linha[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
-    int coluna[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-    int barcoH[3] = {3, 3, 3};
-    int barcoV[3] = {3, 3, 3};
-    int tabuleiro[10][10] = {
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},    
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-    };
+// Define os valores das linhas e colunas, tanto de fora como dentro do tabuleiro.
+#define LINHA 10
+#define COLUNA 10
 
-    printf("\n       "); // Detalhe estético
+int main(){
+    char linha[LINHA];
+    int coluna[COLUNA];
+    int barcos[3] = {3, 3, 3};
+    int tabuleiro[LINHA][COLUNA];
+
+    printf("        "); // Detalhe estético
     printf("< BATALHA NAVAL >\n \n");
 
-    for(int letras = 0; letras <= 9; letras++) // As letras de cima.
+    for(int x = 0; x < LINHA; x++)
     {
-        // Alinhar as letras de cima com o tabuleiro.
-        letras <= 0 ? printf("    %c  ", linha[letras]) : // Alinhando "A".
-                      printf("%c  ", linha[letras]); // O resto não precisa desse alinhamento.
+        linha[x] = 'A' + x; // Imprime as letras de A a J 
+        x != 0 ? printf("%c  ", linha[x]) : // Garante que as letras depois do A estejam propriamente colocadas.
+                 printf("    %c  ", linha[x]); // Garante que o A esteja alinhado com o tabuleiro.
     }
 
     printf("\n"); // Pular linha depois de todas as letras serem imprimidas.
 
-    tabuleiro[5][3] = barcoH[0];
-    tabuleiro[5][4] = barcoH[1]; // "Colando" o Barco Horizontal no tabuleiro. 
-    tabuleiro[5][5] = barcoH[2];
 
-    tabuleiro[0][8] = barcoV[0];
-    tabuleiro[1][8] = barcoV[1]; // "Colando" o Barco Vertical no tabuleiro.
-    tabuleiro[2][8] = barcoV[2];
+    for(int a = 0; a < LINHA; a++){ 
+        coluna[a] = a + 1; // Garantindo os valores dos números fora do tabuleiro.
 
-    for(int linhaM = 0; linhaM <= 9; linhaM++) // Linhas - - -
-    {
-        printf("%2d  ", coluna[linhaM]); // Imprime os números de fora do tabuleiro.
+        for(int b = 0; b < COLUNA; b++){
+            tabuleiro[a][b] = 0; // Garantindo que o tabuleiro seja imprimido com 0.
+        }
+    }
 
-        for(int colunaM = 0; colunaM <= 9; colunaM++) // Colunas | | |
-        {
-            printf("%d  ", tabuleiro[linhaM][colunaM]); // O tabuleiro.
+    tabuleiro[5][3] = barcos[0];
+    tabuleiro[5][4] = barcos[1]; // "Colando" o Barco Horizontal no tabuleiro. 
+    tabuleiro[5][5] = barcos[2];
+
+    tabuleiro[0][8] = barcos[0];
+    tabuleiro[1][8] = barcos[1]; // "Colando" o Barco Vertical no tabuleiro.
+    tabuleiro[2][8] = barcos[2];
+
+    //
+
+    tabuleiro[7][0] = barcos[0];
+    tabuleiro[8][1] = barcos[1]; // "Colando" o primeiro Barco Diagonal no tabuleiro. 
+    tabuleiro[9][2] = barcos[2];
+
+    tabuleiro[3][1] = barcos[0];
+    tabuleiro[2][2] = barcos[1]; // "Colando" o segundo Barco Diagonal no tabuleiro.
+    tabuleiro[1][3] = barcos[2];
+
+
+    for(int i = 0; i < LINHA; i++){
+        printf("%2d  ", coluna[i]); // Imprimindo os números de fora.
+
+        for(int j = 0; j < COLUNA; j++){
+            printf("%d  ", tabuleiro[i][j]);  // Imprimindo o tabuleiro
         }
 
-        printf("\n"); // Pular linha no final de cada loop.
+        printf("\n"); // Pula linha no final de cada loop.
     }
 
     printf("\n"); // Detalhe estético.
-   
+
     return 0;
 }
